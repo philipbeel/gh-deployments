@@ -15,4 +15,4 @@ RUN yarn build
 
 EXPOSE 80
 
-CMD [ "cross-env", "NODE_ENV=production", "node", "dist/index.js"]
+CMD [ "cross-env", "NODE_ENV=production", "yarn", "start"]
