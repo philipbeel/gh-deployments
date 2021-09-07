@@ -1,4 +1,4 @@
-name: build
+name: Test
 
 on:
   push:
@@ -7,19 +7,50 @@ on:
     branches: [main, dev]
 
 jobs:
-  docker:
+  test:
     runs-on: ubuntu-latest
+
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          check-latest: true
+
+      - name: Install 🧶
+        run: yarn
+
+      - name: Lint 🔬
+        run: yarn lint
+
+      - name: Unit tests 🧪
+        run: yarn test
+
+  build:
+      runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          check-latest: true
+      - name: Install 🧶
+        run: yarn
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+          
+      - name: Build and push ⏫
         id: docker_build
         uses: docker/build-push-action@v2
         with:
