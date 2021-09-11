@@ -65,6 +65,8 @@ jobs:
         with:
           username: limitless86
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: LIST
+        run: ls -al
       - name: Build and push feature ⏫
         if: github.event_name == 'pull_request' && github.base_ref == 'dev'
         uses: docker/build-push-action@v2
