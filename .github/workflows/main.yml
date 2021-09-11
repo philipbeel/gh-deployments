@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Release
+      - name: Validate Release
         uses: sanjP10/release-action@1.0.0
         id: release
         with:
@@ -133,7 +133,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Release
+      - name: Create Release
         uses: sanjP10/release-action@1.0.0
         id: release
         with:
