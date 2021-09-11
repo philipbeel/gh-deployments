@@ -68,6 +68,11 @@ jobs:
         with:
           push: true
           tags: limitless86/gh-deployments:${{ github.sha }}
+      - name: Extract branch name
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Build and push ⏫
         if: github.event_name != 'pull_request'
         uses: docker/build-push-action@v2
@@ -75,7 +80,7 @@ jobs:
           push: true
           tags: |
             limitless86/gh-deployments:${{ github.sha }}
-            limitless86/gh-deployments:${{ github.ref }}
+            limitless86/gh-deployments:${{ steps.extract_branch.outputs.branch }}
 
   DeployDev:
     name: Deploy to Development
