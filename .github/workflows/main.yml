@@ -120,6 +120,7 @@ jobs:
       - run: echo "Running kubectl/helm commands with ${GITHUB_SHA} as tag for docker container"
 
   CreateRelease:
+    if: github.event.ref == 'refs/heads/main'
     needs:
       - DeployStaging
     outputs:
@@ -137,7 +138,7 @@ jobs:
           changelog-file-location: CHANGELOG.md
           operation: create
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1\
+        uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
