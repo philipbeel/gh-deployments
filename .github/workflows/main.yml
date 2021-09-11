@@ -61,7 +61,7 @@ jobs:
       - validate
     runs-on: ubuntu-latest
     steps:
-      - run: echo echo ${{ jobs.validate.outputs.version }}
+      - run: echo ${{ needs.validate.outputs.version }}
       - uses: actions/checkout@v2
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
