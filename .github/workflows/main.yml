@@ -32,8 +32,6 @@ jobs:
         run: yarn test
 
   validate:
-    needs:
-      - lint
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.release.outputs.version }}
