@@ -165,4 +165,4 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: echo "Running kubectl/helm commands with ${ needs.CreateRelease.outputs.version } as tag for docker container"
+      - run: echo "Running kubectl/helm commands with ${{ needs.CreateRelease.outputs.version }} as tag for docker container"
