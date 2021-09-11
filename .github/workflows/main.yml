@@ -50,7 +50,10 @@ jobs:
           check-latest: true
       - name: Install 🧶
         run: yarn
-
+      - name: Build app to production 🧶
+        run: yarn build
+      - name: Get Production dependencies ⏫
+        run: yarn install --production --ignore-scripts --prefer-offline
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 

@@ -4,15 +4,13 @@ ENV NODE_VERSION 16.8.0
 ENV PORT=80
 ENV GIT_VERSION=$GIT_VERSION
 
-RUN mkdir -p /code
-WORKDIR /code
+WORKDIR /app
 
-COPY . .
+ENV NODE_ENV production
 
-RUN yarn 
-RUN yarn global add cross-env
-RUN yarn build
+ADD ./node_modules ./node_modules
+ADD ./.next ./.next
 
 EXPOSE 80
 
-CMD [ "cross-env", "NODE_ENV=production", "yarn", "start"]
+CMD [ "npx", "next", "start"]
