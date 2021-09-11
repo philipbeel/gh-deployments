@@ -15,7 +15,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -32,6 +31,24 @@ jobs:
       - name: Unit tests 🧪
         run: yarn test
 
+  validate:
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Release
+        uses: sanjP10/release-action@1.0.0
+        id: release
+        with:
+          changelog-file-location: CHANGELOG.md
+          operation: validate
+
   Build:
     name: Build
     if: |
@@ -41,8 +58,10 @@ jobs:
       github.event.ref == 'refs/heads/main')
     needs:
       - test
+      - validate
     runs-on: ubuntu-latest
     steps:
+      - run: echo echo ${{ jobs.validate.outputs.version }}
       - uses: actions/checkout@v2
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -104,6 +123,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: echo "Running kubectl/helm commands with ${GITHUB_SHA} as tag for docker container"
+
+  create:
+    needs:
+      - DeployStaging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Release
+        uses: sanjP10/release-action@1.0.0
+        id: release
+        with:
+          changelog-file-location: CHANGELOG.md
+          operation: create
 
   DeployProd:
     name: Deploy to Production
