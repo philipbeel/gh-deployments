@@ -149,7 +149,8 @@ jobs:
           docker pull limitless86:${GITHUB_SHA}
           docker tag limitless86:${GITHUB_SHA} limitless86:${{ steps.release.outputs.version }}
           docker tag limitless86:${GITHUB_SHA} limitless86:latest
-          docker push
+          docker push limitless86:${{ steps.release.outputs.version }}
+          docker push limitless86:latest
 
   DeployProd:
     name: Deploy to Production
