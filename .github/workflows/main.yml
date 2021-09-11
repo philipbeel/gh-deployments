@@ -62,12 +62,12 @@ jobs:
         with:
           username: limitless86
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push ⏫
+      - name: Build and push feature ⏫
         if: ${{ github.event_name == 'pull_request' }}
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: limitless86/gh-deployments:${GITHUB_SHA}
+          tags: limitless86/gh-deployments:${{ github.sha }}
       - name: Build and push ⏫
         if: |
           ${{ github.event.ref == 'refs/heads/main' }} ||
@@ -77,8 +77,8 @@ jobs:
         with:
           push: true
           tags: |
-            limitless86/gh-deployments:${GITHUB_SHA}
-            limitless86/gh-deployments:${GITHUB_REF}
+            limitless86/gh-deployments:${{ github.sha }}
+            limitless86/gh-deployments:${{ github.ref }}
 
   DeployDev:
     name: Deploy to Development
