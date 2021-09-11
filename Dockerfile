@@ -8,8 +8,8 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-ADD ./node_modules ./node_modules
-ADD ./.next ./.next
+COPY ./node_modules ./node_modules
+COPY ./.next ./.next
 
 EXPOSE 80
 
