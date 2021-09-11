@@ -149,9 +149,9 @@ jobs:
       - run: |
           docker pull limitless86/gh-deployments:${GITHUB_SHA}
           docker tag limitless86/gh-deployments:${GITHUB_SHA} limitless86/gh-deployments:${{ steps.release.outputs.version }}
-          docker tag limitless86/gh-deployments::${GITHUB_SHA} limitless86:latest
+          docker tag limitless86/gh-deployments:${GITHUB_SHA} limitless86:latest
           docker push limitless86/gh-deployments:${{ steps.release.outputs.version }}
-          docker push limitless86/gh-deployments::latest
+          docker push limitless86/gh-deployments:latest
 
   DeployProd:
     name: Deploy to Production
