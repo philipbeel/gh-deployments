@@ -91,7 +91,7 @@ jobs:
 
   DeployDev:
     name: Deploy to Development
-    if: github.event_name == 'pull_request' ||
+    if: (github.event_name == 'pull_request' && github.event.base_ref == 'refs/heads/dev') ||
         github.event.ref == 'refs/heads/dev'
     needs:
       - Build
